@@ -3,7 +3,7 @@ module Main exposing (..)
 import Browser
 import Html exposing (..)
 import Html.Attributes exposing (..)
-import Html.Events exposing (onInput)
+import Html.Events exposing (..)
 
 
 -- MAIN
@@ -26,12 +26,13 @@ type alias Model =
     { username : String
     , password : String
     , passwordConfirmation : String
+    , errorMessage : String
     }
 
 
 init : Model
 init =
-    Model "" "" ""
+    Model "" "" "" ""
 
 
 
@@ -42,6 +43,7 @@ type Msg
     = UsernameEntered String
     | PasswordEntered String
     | PasswordConfirmed String
+    | FormSubmitted
 
 
 update : Msg -> Model -> Model
@@ -56,6 +58,15 @@ update msg model =
         PasswordConfirmed password ->
             { model | passwordConfirmation = password }
 
+        FormSubmitted ->
+            { model
+                | errorMessage =
+                    if model.password /= model.passwordConfirmation then
+                        "Password mismatch!"
+                    else
+                        ""
+            }
+
 
 
 -- VIEW
@@ -67,6 +78,7 @@ view model =
         [ textField "Username" model.username UsernameEntered
         , passwordField "Password" model.password PasswordEntered
         , passwordField "Confirm Password" model.passwordConfirmation PasswordConfirmed
+        , submitButton FormSubmitted
         , validationMessages model
         ]
 
@@ -81,9 +93,14 @@ passwordField ph val toMsg =
     div [] [ input [ type_ "password", placeholder ph, value val, onInput toMsg ] [] ]
 
 
+submitButton : msg -> Html msg
+submitButton msg =
+    div [] [ button [ onClick msg ] [ text "Submit" ] ]
+
+
 validationMessages : Model -> Html msg
 validationMessages model =
-    if model.password == model.passwordConfirmation then
+    if model.errorMessage == "" then
         div [ style "color" "green" ] [ text "OK" ]
     else
-        div [ style "color" "red" ] [ text "Password mismatch!" ]
+        div [ style "color" "red" ] [ text model.errorMessage ]
