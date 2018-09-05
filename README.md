@@ -1,5 +1,5 @@
-101 elm examples
-================
+101 elm samples
+===============
 
 # Resources
 
