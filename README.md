@@ -1,5 +1,24 @@
-101 elm samples
+Elm 101 samples
 ===============
+
+This collection of small samples is part of my learning process for elm.
+
+# Dependencies
+
+- Elm 0.19
+
+# Run the samples
+
+Run 'elm reactor' or 'elm make' inside each folder.
+These samples are meant to be completely independent of each other.
+
+# Summary
+
+- toggle-text
+- user-form
+- user-form-validation
+- random-die
+- random-die-face
 
 # Resources
 
