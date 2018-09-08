@@ -20,7 +20,8 @@ These samples are meant to be completely independent of each other.
 - user-form-live-validation
 - random-die
 - random-die-face
-- clock
+- digital-clock
+- analog-clock
 - http-giphy
 
 # Resources

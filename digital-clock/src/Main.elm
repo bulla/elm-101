@@ -83,17 +83,16 @@ view model =
 
         second =
             leftPadWithZero (Time.toSecond model.zone model.time)
+
+        currentTime =
+            hour ++ ":" ++ minute ++ ":" ++ second
     in
-    h1 [] [ text (hour ++ ":" ++ minute ++ ":" ++ second) ]
+    h1 [] [ text currentTime ]
 
 
 leftPadWithZero : Int -> String
-leftPadWithZero nbr =
-    let
-        str =
-            String.fromInt nbr
-    in
-    if length str == 1 then
-        "0" ++ str
+leftPadWithZero number =
+    if number < 10 then
+        "0" ++ String.fromInt number
     else
-        str
+        String.fromInt number
