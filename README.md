@@ -17,6 +17,7 @@ These samples are meant to be completely independent of each other.
 - toggle-text
 - user-form
 - user-form-validation
+- user-form-live-validation
 - random-die
 - random-die-face
 - clock
