@@ -76,30 +76,24 @@ view : Model -> Html Msg
 view model =
     let
         hour =
-            String.fromInt (Time.toHour model.zone model.time)
-
-        paddedHour =
-            if length hour == 1 then
-                "0" ++ hour
-            else
-                hour
+            leftPadWithZero (Time.toHour model.zone model.time)
 
         minute =
-            String.fromInt (Time.toMinute model.zone model.time)
-
-        paddedMinute =
-            if length minute == 1 then
-                "0" ++ minute
-            else
-                minute
+            leftPadWithZero (Time.toMinute model.zone model.time)
 
         second =
-            String.fromInt (Time.toSecond model.zone model.time)
-
-        paddedSecond =
-            if length second == 1 then
-                "0" ++ second
-            else
-                second
+            leftPadWithZero (Time.toSecond model.zone model.time)
     in
-    h1 [] [ text (paddedHour ++ ":" ++ paddedMinute ++ ":" ++ paddedSecond) ]
+    h1 [] [ text (hour ++ ":" ++ minute ++ ":" ++ second) ]
+
+
+leftPadWithZero : Int -> String
+leftPadWithZero nbr =
+    let
+        str =
+            String.fromInt nbr
+    in
+    if length str == 1 then
+        "0" ++ str
+    else
+        str
