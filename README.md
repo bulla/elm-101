@@ -19,6 +19,8 @@ These samples are meant to be completely independent of each other.
 - user-form-validation
 - random-die
 - random-die-face
+- clock
+- http-giphy
 
 # Resources
 
