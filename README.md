@@ -21,6 +21,7 @@ These samples are meant to be completely independent of each other.
 - random-die
 - random-die-face
 - random-card-face
+- random-cards-deck
 - digital-clock
 - analog-clock
 - http-giphy
