@@ -74,6 +74,9 @@ initDeck =
     , Card King Clubs
     , Card Queen Hearts
     , Card Jack Diamonds
+    , Card Seven Spades
+    , Card Ten Hearts
+    , Card Three Clubs
     ]
 
 
@@ -84,6 +87,7 @@ initDeck =
 type Msg
     = Draw
     | NewCard ( Maybe Card, List Card )
+    | Reset
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -99,6 +103,11 @@ update msg model =
                 | drawnCard = newCard
                 , deck = newDeck
               }
+            , Cmd.none
+            )
+
+        Reset ->
+            ( Model initDeck [] Nothing
             , Cmd.none
             )
 
@@ -125,21 +134,40 @@ view : Model -> Html Msg
 view model =
     div []
         [ h1 [] [ text "Draw cards" ]
-        , deckImage model.deck
-        , cardImage model.drawnCard
+        , div []
+            [ deckImage model.deck
+            , cardImage model.drawnCard
+            ]
+        , div [ style "clear" "both" ]
+            [ br [] []
+            , remainingCards model.deck
+            ]
         ]
+
+
+remainingCards : List Card -> Html Msg
+remainingCards deck =
+    div []
+        [ text ("Remaining cards (" ++ String.fromInt (List.length deck) ++ "): " ++ deckToString deck) ]
+
+
+deckToString : List Card -> String
+deckToString deck =
+    Debug.toString (List.map cardToString deck)
 
 
 emptyImage : Html Msg
 emptyImage =
     div [ style "float" "left" ]
-        [ img
-            [ src "../images/empty.png"
-            , alt "Empty deck"
-            , title "Deck is now empty"
-            , height 250
+        [ a [ onClick Reset ]
+            [ img
+                [ src "../images/empty.png"
+                , alt "Empty deck"
+                , title "Deck is now empty"
+                , height 250
+                ]
+                []
             ]
-            []
         ]
 
 
@@ -165,7 +193,7 @@ cardImage : Maybe Card -> Html Msg
 cardImage maybeCard =
     case maybeCard of
         Nothing ->
-            emptyImage
+            div [ style "float" "left" ] []
 
         Just card ->
             div [ style "float" "left" ]
