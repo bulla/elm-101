@@ -26,6 +26,7 @@ These samples are meant to be completely independent of each other.
 - analog-clock
 - http-giphy
 - url-interceptor
+- circular-zipper-list
 
 # Resources
 
