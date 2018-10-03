@@ -25,9 +25,7 @@ main =
 
 
 type alias Model =
-    { hand : List Card
-    , drawnCard : Card
-    }
+    { drawnCard : Card }
 
 
 type alias Card =
@@ -61,7 +59,7 @@ type Rank
 
 init : () -> ( Model, Cmd Msg )
 init _ =
-    ( Model [] (Card Ace Diamonds)
+    ( Model (Card Ace Diamonds)
     , Cmd.none
     )
 
