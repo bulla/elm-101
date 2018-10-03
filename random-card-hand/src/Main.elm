@@ -4,10 +4,10 @@ import Browser
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
+import List exposing (..)
 import Random
 import Random.List exposing (..)
 import String exposing (concat)
-import List exposing (..)
 
 
 -- MAIN
@@ -131,31 +131,35 @@ randomCard : List Card -> Random.Generator ( Maybe Card, List Card )
 randomCard deck =
     Random.List.choose deck
 
+
 selectCard : Model -> Card -> List Card -> Model
-selectCard model newCard newDeck =  
+selectCard model newCard newDeck =
     { model
-    | drawnCards = newCard :: model.drawnCards
-    , deck = newDeck
+        | drawnCards = newCard :: model.drawnCards
+        , deck = newDeck
     }
 
-restoreDrawnCard: Model -> Model
+
+restoreDrawnCard : Model -> Model
 restoreDrawnCard model =
     case model.drawnCards of
-        (card :: cards) ->
+        card :: cards ->
             { model
-            | deck = card :: model.deck
-            , drawnCards = cards
+                | deck = card :: model.deck
+                , drawnCards = cards
             }
-        
-        _ -> 
+
+        _ ->
             model
-            
-revealDrawnCards: Model -> Model
+
+
+revealDrawnCards : Model -> Model
 revealDrawnCards model =
     { model
-    | hand = model.hand ++ model.drawnCards
-    , drawnCards= []
+        | hand = model.hand ++ model.drawnCards
+        , drawnCards = []
     }
+
 
 
 -- SUBSCRIPTIONS
@@ -179,12 +183,12 @@ view model =
             , div [] (List.map cardBackImage model.drawnCards)
             ]
         , div [ style "clear" "both" ]
-            (List.map cardFrontImage model.hand )
+            (List.map cardFrontImage model.hand)
         , div [ style "clear" "both" ]
             [ br [] []
             , remainingCards model.deck
             , br [] []
-            , button [ onClick Reveal ] [text "Reveal"]
+            , actions model
             ]
         ]
 
@@ -193,6 +197,15 @@ remainingCards : List Card -> Html Msg
 remainingCards deck =
     div []
         [ text ("Remaining cards (" ++ String.fromInt (List.length deck) ++ "): " ++ deckToString deck) ]
+
+
+actions : Model -> Html Msg
+actions model =
+    if List.isEmpty model.drawnCards then
+        div [] []
+    else
+        div []
+            [ button [ onClick Reveal ] [ text "Reveal" ] ]
 
 
 deckToString : List Card -> String
@@ -232,6 +245,7 @@ deckImage deck =
                 ]
             ]
 
+
 cardBackImage : Card -> Html Msg
 cardBackImage card =
     div [ style "float" "left" ]
@@ -245,6 +259,7 @@ cardBackImage card =
                 []
             ]
         ]
+
 
 cardFrontImage : Card -> Html Msg
 cardFrontImage card =
