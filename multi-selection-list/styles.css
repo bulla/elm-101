@@ -1,0 +1,21 @@
+.card {
+    padding: 10px 20px;
+    margin: 5px;
+    border: black 1px solid;
+    border-radius: 8px;
+}
+
+.current-card {
+    font-weight: bold;
+    background-color: #efefef;
+    border: black 1px dashed;
+}
+
+.current-card:before {
+    content: "> ";
+}
+
+.selected-card {
+    background-color: #cba5ff;
+    font-style: italic;
+}
